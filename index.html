@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziad BMW Web | Ultimate Driving Machine</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bmw: {
+                            blue: '#0066B1',
+                            lightblue: '#00A3E0',
+                            red: '#E7222E',
+                            dark: '#080a0f',
+                            card: '#0f131d',
+                            glass: 'rgba(15, 19, 29, 0.7)'
+                        }
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                        cinzel: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom Glowing & Shimmering Animation for Header Title */
+        .glowing-ziad-title {
+            background: linear-gradient(
+                135deg, 
+                #ffffff 0%, 
+                #a8c0ff 25%, 
+                #0066B1 50%, 
+                #00A3E0 75%, 
+                #ffffff 100%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shineText 4s linear infinite, neonGlow 2.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes shineText {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes neonGlow {
+            0% {
+                text-shadow: 0 0 10px rgba(0, 102, 177, 0.5),
+                             0 0 20px rgba(0, 163, 224, 0.3);
+            }
+            100% {
+                text-shadow: 0 0 15px rgba(0, 102, 177, 0.8),
+                             0 0 35px rgba(0, 163, 224, 0.6),
+                             0 0 50px rgba(231, 34, 46, 0.4);
+            }
+        }
+
+        /* Subtle Animated Grid Background */
+        .bg-grid-pattern {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(15, 19, 29, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-panel-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-panel-hover:hover {
+            border-color: rgba(0, 163, 224, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(0, 102, 177, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0066B1;
+        }
+
+        /* Headlight Glow Effect Overlay */
+        .headlight-glow {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: radial-gradient(circle at 30% 60%, rgba(0, 163, 224, 0.35) 0%, transparent 40%),
+                        radial-gradient(circle at 70% 60%, rgba(0, 163, 224, 0.35) 0%, transparent 40%);
+        }
+        .headlights-on .headlight-glow {
+            opacity: 1;
+        }
+
+        /* BMW M Tri-color Stripe */
+        .m-stripe {
+            background: linear-gradient(90deg, #0066B1 0% 33.3%, #00A3E0 33.3% 66.6%, #E7222E 66.6% 100%);
+        }
+
+        /* 3D Tilt Card Container */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Audio Visualizer Waves */
+        .sound-wave {
+            display: inline-block;
+            width: 3px;
+            height: 12px;
+            background-color: #00A3E0;
+            margin: 0 1px;
+            animation: quiet 0.5s ease-in-out infinite alternate;
+        }
+        .sound-wave.active {
+            animation: wave 0.4s ease-in-out infinite alternate;
+        }
+        @keyframes wave {
+            0% { height: 4px; }
+            100% { height: 22px; }
+        }
+        @keyframes quiet {
+            0% { height: 4px; }
+            100% { height: 6px; }
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-[#080a0f] text-slate-100 font-inter min-h-screen overflow-x-hidden bg-grid-pattern relative">
+
+    <!-- Ambient Light Spots -->
+    <div class="fixed -top-40 -left-40 w-96 h-96 bg-bmw-blue/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed top-1/3 -right-40 w-96 h-96 bg-bmw-lightblue/15 rounded-full blur-[140px] pointer-events-none z-0"></div>
+    <div class="fixed -bottom-40 left-1/3 w-96 h-96 bg-bmw-red/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- BMW Logo + Branding -->
+            <div class="flex items-center space-x-3">
+                <svg class="w-10 h-10 transition-transform duration-500 hover:rotate-180" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="46" fill="none" stroke="#ffffff" stroke-width="3"/>
+                    <circle cx="50" cy="50" r="42" fill="#000000"/>
+                    <path d="M50 8 A 42 42 0 0 1 92 50 L 50 50 Z" fill="#0066B1"/>
+                    <path d="M50 50 L 8 50 A 42 42 0 0 1 50 8 Z" fill="#ffffff"/>
+                    <path d="M50 50 L 92 50 A 42 42 0 0 1 50 92 Z" fill="#ffffff"/>
+                    <path d="M50 50 L 50 92 A 42 42 0 0 1 8 50 Z" fill="#0066B1"/>
+                    <circle cx="50" cy="50" r="14" fill="#080a0f" stroke="#ffffff" stroke-width="1.5"/>
+                    <text x="50" y="54" font-family="'Syne', sans-serif" font-weight="bold" font-size="10" fill="#ffffff" text-anchor="middle">M</text>
+                </svg>
+                <div class="hidden sm:block">
+                    <span class="font-syne text-xs uppercase tracking-widest text-slate-400 block">Performance & Luxury</span>
+                    <span class="font-bold tracking-wider text-white">THE M POWER SHOWCASE</span>
+                </div>
+            </div>
+
+            <!-- Header Branding Request: Ziad Bmw web in the Top Center -->
+            <div class="text-center absolute left-1/2 transform -translate-x-1/2">
+                <h1 class="glowing-ziad-title font-syne text-xl sm:text-2xl md:text-3xl font-extrabold tracking-wider uppercase px-2 py-1">
+                    Ziad Bmw web
+                </h1>
+            </div>
+
+            <!-- Right Nav Items & Sound Synth Toggle -->
+            <div class="flex items-center space-x-4 sm:space-x-6">
+                <button id="engine-sound-btn" onclick="toggleEngineSound()" class="flex items-center space-x-2 glass-panel px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-slate-700 hover:border-bmw-lightblue text-xs sm:text-sm font-semibold transition-all">
+                    <i class="fa-solid fa-volume-xmark text-slate-400" id="sound-icon"></i>
+                    <span class="hidden md:inline">V8 TwinTurbo Sound</span>
+                    <div class="flex items-end h-3 ml-1" id="sound-visualizer">
+                        <span class="sound-wave"></span>
+                        <span class="sound-wave" style="animation-delay: 0.1s"></span>
+                        <span class="sound-wave" style="animation-delay: 0.2s"></span>
+                        <span class="sound-wave" style="animation-delay: 0.3s"></span>
+                    </div>
+                </button>
+                <a href="#customizer" class="hidden sm:inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-bmw-blue to-bmw-lightblue text-white text-xs uppercase font-bold tracking-wider hover:opacity-90 transition shadow-lg shadow-bmw-blue/30">
+                    Customize
+                </a>
+            </div>
+        </div>
+        <!-- Decorative M Stripe Bar -->
+        <div class="h-1 w-full m-stripe"></div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-[90vh] flex items-center justify-center pt-8 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Hero Text Content -->
+            <div class="lg:col-span-5 z-10 space-y-6 text-center lg:text-left reveal">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-panel border border-bmw-lightblue/30 text-bmw-lightblue text-xs font-semibold tracking-widest uppercase">
+                    <span class="w-2 h-2 rounded-full bg-bmw-lightblue animate-ping"></span>
+                    <span>Next-Gen Motorsport Engineering</span>
+                </div>
+                
+                <h1 class="font-syne text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white">
+                    SHEER <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-bmw-lightblue">DRIVING</span> <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-bmw-blue via-bmw-lightblue to-white">PLEASURE.</span>
+                </h1>
+
+                <p class="text-slate-400 text-sm sm:text-base max-w-lg mx-auto lg:mx-0 leading-relaxed font-light">
+                    Experience unrivaled dynamic power, cutting-edge futuristic aesthetic, and relentless M-Engineering crafted directly by <span class="text-white font-medium">Ziad BMW Web</span>.
+                </p>
+
+                <!-- Action CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+                    <a href="#models" class="px-8 py-4 rounded-xl bg-gradient-to-r from-bmw-blue via-bmw-lightblue to-bmw-blue bg-[length:200%_auto] hover:bg-right transition-all duration-500 text-white font-bold text-sm tracking-widest uppercase shadow-xl shadow-bmw-blue/30 text-center">
+                        Explore Models <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                    <button onclick="toggleHeadlights()" class="px-6 py-4 rounded-xl glass-panel hover:bg-slate-800/80 border border-slate-700 text-white font-bold text-sm tracking-widest uppercase transition flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-lightbulb text-bmw-lightblue" id="light-icon"></i>
+                        <span id="light-btn-text">Toggle Laserlights</span>
+                    </button>
+                </div>
+
+                <!-- Fast Specs Row -->
+                <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80">
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase tracking-wider">Top Speed</p>
+                        <p class="text-xl sm:text-2xl font-bold font-syne text-white"><span class="counter" data-target="305">0</span> <span class="text-xs text-bmw-lightblue font-normal">km/h</span></p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase tracking-wider">Max Power</p>
+                        <p class="text-xl sm:text-2xl font-bold font-syne text-white"><span class="counter" data-target="635">0</span> <span class="text-xs text-bmw-lightblue font-normal">HP</span></p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase tracking-wider">0-100 Km/h</p>
+                        <p class="text-xl sm:text-2xl font-bold font-syne text-white"><span class="counter-float" data-target="3.0">0</span> <span class="text-xs text-bmw-red font-normal">sec</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image Visual Showcase -->
+            <div class="lg:col-span-7 relative z-10 flex justify-center items-center reveal">
+                <!-- Outer Ambient Aura -->
+                <div id="hero-bg-aura" class="absolute w-72 h-72 sm:w-[480px] sm:h-[480px] rounded-full bg-bmw-blue/20 blur-[90px] transition-all duration-700 pointer-events-none"></div>
+                
+                <!-- Main Car Card Frame -->
+                <div id="hero-card" class="tilt-card glass-panel p-4 sm:p-6 rounded-3xl border border-slate-700/50 shadow-2xl relative w-full overflow-hidden headlights-off">
+                    
+                    <!-- Headlight Beam Overlay -->
+                    <div class="headlight-glow absolute inset-0 rounded-3xl pointer-events-none"></div>
+
+                    <!-- Badge Tag -->
+                    <div class="flex justify-between items-center mb-4">
+                        <span id="hero-model-tag" class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-bmw-red/20 text-bmw-red border border-bmw-red/30">
+                            BMW M5 CS
+                        </span>
+                        <span class="text-xs text-slate-400 font-mono"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> TwinPower Turbo V8</span>
+                    </div>
+
+                    <!-- Main Image Display -->
+                    <div class="relative h-56 sm:h-80 md:h-96 flex items-center justify-center overflow-hidden rounded-2xl group">
+                        <img id="hero-car-img" 
+                             src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1400&q=80" 
+                             alt="BMW M5 CS" 
+                             class="w-full h-full object-cover object-center rounded-2xl transform transition-transform duration-700 group-hover:scale-105"
+                             onerror="this.src='https://placehold.co/1000x600/0b0d12/00A3E0?text=BMW+Performance'"
+                        />
+                        <!-- Subtle Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#080a0f] via-transparent to-transparent opacity-80"></div>
+                    </div>
+
+                    <!-- Interactive Quick Toggle Bar under image -->
+                    <div class="mt-4 flex justify-between items-center text-xs text-slate-400">
+                        <span><i class="fa-solid fa-gauge-high text-bmw-lightblue mr-1"></i> Intelligent xDrive AWD</span>
+                        <span class="font-mono text-slate-300">Edition Crafted for Ziad BMW</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- BMW SHOWCASE / INTERACTIVE MODEL SELECTOR -->
+    <section id="models" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-12 reveal">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-bmw-lightblue mb-2">Flagship Fleet</h2>
+            <h3 class="font-syne text-3xl sm:text-5xl font-extrabold text-white">SELECT YOUR POWERHOUSE</h3>
+            <div class="w-24 h-1 m-stripe mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <!-- Model Tabs Switcher -->
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12 reveal">
+            <button onclick="switchModel(0)" class="model-tab active-tab px-5 py-3 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 glass-panel border border-bmw-lightblue text-white shadow-lg shadow-bmw-blue/20">
+                BMW M5 CS
+            </button>
+            <button onclick="switchModel(1)" class="model-tab px-5 py-3 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 glass-panel border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600">
+                BMW i7 xDrive60
+            </button>
+            <button onclick="switchModel(2)" class="model-tab px-5 py-3 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 glass-panel border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600">
+                BMW M4 CSL
+            </button>
+            <button onclick="switchModel(3)" class="model-tab px-5 py-3 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 glass-panel border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600">
+                BMW XM Label Red
+            </button>
+        </div>
+
+        <!-- Dynamic Model Details Card -->
+        <div id="model-display-card" class="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-700/60 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal">
+            
+            <!-- Car Image Section -->
+            <div class="lg:col-span-7 relative overflow-hidden rounded-2xl group">
+                <div id="model-aura" class="absolute inset-0 bg-bmw-blue/20 blur-2xl rounded-2xl transition-all duration-500"></div>
+                <img id="selected-car-img" 
+                     src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80" 
+                     alt="BMW Model Showcase" 
+                     class="w-full h-72 sm:h-96 object-cover rounded-2xl relative z-10 transform transition-all duration-700 group-hover:scale-105"
+                     onerror="this.src='https://placehold.co/1000x600/0b0d12/00A3E0?text=BMW+Model'"
+                />
+            </div>
+
+            <!-- Car Specs Details -->
+            <div class="lg:col-span-5 space-y-6">
+                <div>
+                    <span id="selected-badge" class="text-xs font-bold uppercase tracking-widest text-bmw-lightblue bg-bmw-blue/20 px-3 py-1 rounded-full border border-bmw-lightblue/30">
+                        V8 TWIN POWER
+                    </span>
+                    <h3 id="selected-title" class="font-syne text-3xl sm:text-4xl font-extrabold text-white mt-3">
+                        BMW M5 CS
+                    </h3>
+                    <p id="selected-desc" class="text-slate-400 text-sm mt-2 leading-relaxed">
+                        The most powerful BMW M car in history. Lightened chassis, carbon-bucket seats, and racetrack calibrated xDrive performance.
+                    </p>
+                </div>
+
+                <!-- Performance Grid -->
+                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800">
+                    <div class="glass-panel p-3 rounded-xl border border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase">Engine Specs</p>
+                        <p id="spec-engine" class="text-base font-bold text-white mt-1">4.4L V8 TwinTurbo</p>
+                    </div>
+                    <div class="glass-panel p-3 rounded-xl border border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase">Horsepower</p>
+                        <p id="spec-hp" class="text-base font-bold text-bmw-lightblue mt-1">635 HP</p>
+                    </div>
+                    <div class="glass-panel p-3 rounded-xl border border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase">Torque</p>
+                        <p id="spec-torque" class="text-base font-bold text-white mt-1">750 Nm</p>
+                    </div>
+                    <div class="glass-panel p-3 rounded-xl border border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase">0-100 km/h</p>
+                        <p id="spec-acc" class="text-base font-bold text-bmw-red mt-1">3.0 Seconds</p>
+                    </div>
+                </div>
+
+                <!-- Call to action button -->
+                <div class="pt-2">
+                    <a href="#customizer" class="inline-block w-full text-center py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs uppercase tracking-widest transition border border-slate-600">
+                        Configure Spec & Colors <i class="fa-solid fa-sliders ml-2 text-bmw-lightblue"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ENGINEERING & TECH HIGHLIGHTS -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-bmw-red mb-2">Mastery of Innovation</h2>
+            <h3 class="font-syne text-3xl sm:text-5xl font-extrabold text-white">ENGINEERED WITHOUT COMPROMISE</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Tech Card 1 -->
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 glass-panel-hover reveal">
+                <div class="w-12 h-12 rounded-xl bg-bmw-blue/20 flex items-center justify-center text-bmw-lightblue mb-6 text-xl">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <h4 class="font-syne text-xl font-bold text-white mb-2">BMW M xDrive</h4>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    Intelligent all-wheel drive with active differential to distribute power effortlessly between all four wheels or 100% rear drive.
+                </p>
+            </div>
+
+            <!-- Tech Card 2 -->
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 glass-panel-hover reveal" style="transition-delay: 0.1s">
+                <div class="w-12 h-12 rounded-xl bg-bmw-red/20 flex items-center justify-center text-bmw-red mb-6 text-xl">
+                    <i class="fa-solid fa-desktop"></i>
+                </div>
+                <h4 class="font-syne text-xl font-bold text-white mb-2">iDrive 8.5 Curved</h4>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    Ultra-wide seamless dual glass cockpit display integrated with Augmented Reality HUD and BMW Intelligent Personal Assistant.
+                </p>
+            </div>
+
+            <!-- Tech Card 3 -->
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 glass-panel-hover reveal" style="transition-delay: 0.2s">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-400 mb-6 text-xl">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h4 class="font-syne text-xl font-bold text-white mb-2">Laserlight Tech</h4>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    High-beam laser headlights illuminating the road up to 650 meters ahead with adaptive dynamic cornering logic.
+                </p>
+            </div>
+
+            <!-- Tech Card 4 -->
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 glass-panel-hover reveal" style="transition-delay: 0.3s">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400 mb-6 text-xl">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h4 class="font-syne text-xl font-bold text-white mb-2">Carbon Core</h4>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    Lightweight Carbon Fiber Reinforced Plastic (CFRP) structure lowering center of gravity for supreme high-speed cornering agility.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INTERACTIVE COLOR CUSTOMIZER EXPERIENCE -->
+    <section id="customizer" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="glass-panel rounded-3xl p-6 sm:p-12 border border-slate-700/80 relative overflow-hidden reveal">
+            
+            <div class="text-center mb-10">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-bmw-lightblue mb-2">BMW Individual Studio</h2>
+                <h3 class="font-syne text-3xl sm:text-4xl font-extrabold text-white">INTERACTIVE FINISH STUDIO</h3>
+                <p class="text-slate-400 text-sm mt-2">Select a bespoke BMW Individual paint finish to visualize dynamic lighting reflections.</p>
+            </div>
+
+            <!-- Interactive Visual Display -->
+            <div class="relative w-full h-64 sm:h-96 rounded-2xl overflow-hidden flex items-center justify-center bg-slate-950 border border-slate-800">
+                
+                <!-- Dynamic Backlight Glow -->
+                <div id="paint-glow" class="absolute w-80 h-80 rounded-full blur-[100px] opacity-60 transition-all duration-700 bg-[#1E3A8A]"></div>
+
+                <!-- Car Image Overlay -->
+                <img id="customizer-car-img" 
+                     src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80" 
+                     alt="BMW Finish Studio" 
+                     class="w-full h-full object-cover relative z-10 transition-all duration-500"
+                     onerror="this.src='https://placehold.co/1000x600/0b0d12/00A3E0?text=BMW+Customizer'"
+                />
+
+                <!-- Finish Label Overlay -->
+                <div class="absolute top-4 left-4 z-20 glass-panel px-4 py-2 rounded-xl border border-slate-700">
+                    <span class="text-xs text-slate-400 block uppercase font-mono">Current Selection</span>
+                    <span id="paint-name" class="text-sm font-bold text-white font-syne">Isle of Man Green Metallic</span>
+                </div>
+            </div>
+
+            <!-- Paint Finish Selector Buttons -->
+            <div class="flex flex-wrap justify-center items-center gap-4 mt-8">
+                <!-- Color 1: Green -->
+                <button onclick="changePaint('#054e38', 'Isle of Man Green Metallic', 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80')" 
+                        class="paint-btn w-12 h-12 rounded-full border-2 border-white/80 transition-transform transform hover:scale-110 shadow-lg" 
+                        style="background-color: #054e38;" title="Isle of Man Green"></button>
+                
+                <!-- Color 2: Blue -->
+                <button onclick="changePaint('#0066B1', 'Marina Bay Blue Metallic', 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80')" 
+                        class="paint-btn w-12 h-12 rounded-full border-2 border-transparent hover:border-white/80 transition-transform transform hover:scale-110 shadow-lg" 
+                        style="background-color: #0066B1;" title="Marina Bay Blue"></button>
+
+                <!-- Color 3: Red -->
+                <button onclick="changePaint('#8a0c13', 'Fire Red Metallic', 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1200&q=80')" 
+                        class="paint-btn w-12 h-12 rounded-full border-2 border-transparent hover:border-white/80 transition-transform transform hover:scale-110 shadow-lg" 
+                        style="background-color: #8a0c13;" title="Fire Red"></button>
+
+                <!-- Color 4: Frozen Grey -->
+                <button onclick="changePaint('#3a3d40', 'Frozen Deep Grey Matte', 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1200&q=80')" 
+                        class="paint-btn w-12 h-12 rounded-full border-2 border-transparent hover:border-white/80 transition-transform transform hover:scale-110 shadow-lg" 
+                        style="background-color: #3a3d40;" title="Frozen Deep Grey"></button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="glass-panel border-t border-slate-800/80 pt-12 pb-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+                
+                <!-- Footer Brand -->
+                <div class="text-center md:text-left">
+                    <h3 class="glowing-ziad-title font-syne text-xl font-bold uppercase tracking-widest">
+                        Ziad Bmw web
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">An Interactive Automotive Art Experience built for enthusiasts.</p>
+                </div>
+
+                <!-- Social & Interactive Links -->
+                <div class="flex space-x-6 text-slate-400 text-lg">
+                    <a href="#" class="hover:text-bmw-lightblue transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-bmw-lightblue transition"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-bmw-lightblue transition"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="hover:text-bmw-lightblue transition"><i class="fa-solid fa-globe"></i></a>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-800/50 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+                <p>© 2026 Crafted by Ziad. All Rights Reserved.</p>
+                <div class="flex space-x-4 mt-2 sm:mt-0">
+                    <span class="hover:text-slate-300 cursor-pointer">Privacy Policy</span>
+                    <span>•</span>
+                    <span class="hover:text-slate-300 cursor-pointer">BMW M Performance</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT INTERACTIVITY -->
+    <script>
+        // 1. DATA FOR BMW MODELS
+        const bmwModels = [
+            {
+                title: "BMW M5 CS",
+                badge: "V8 TWIN POWER",
+                desc: "The most powerful BMW M car in history. Lightened chassis, carbon-bucket seats, and racetrack calibrated xDrive performance.",
+                engine: "4.4L V8 TwinTurbo",
+                hp: "635 HP",
+                torque: "750 Nm",
+                acc: "3.0 Seconds",
+                image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80",
+                auraColor: "rgba(0, 102, 177, 0.3)"
+            },
+            {
+                title: "BMW i7 xDrive60",
+                badge: "FULLY ELECTRIC LUXURY",
+                desc: "Next-gen flagship electric sedan featuring the 31-inch 8K Theatre Screen, Executive Lounge seats, and dual motors.",
+                engine: "Dual Electric Motors",
+                hp: "544 HP",
+                torque: "745 Nm",
+                acc: "4.7 Seconds",
+                image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1200&q=80",
+                auraColor: "rgba(0, 163, 224, 0.3)"
+            },
+            {
+                title: "BMW M4 CSL",
+                badge: "TRACK SPECIALIST",
+                desc: "Competition Sport Lightweight edition engineered for lap times with ultra-stiff chassis geometry and racing seats.",
+                engine: "3.0L TwinPower Inline-6",
+                hp: "550 HP",
+                torque: "650 Nm",
+                acc: "3.7 Seconds",
+                image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80",
+                auraColor: "rgba(231, 34, 46, 0.3)"
+            },
+            {
+                title: "BMW XM Label Red",
+                badge: "HYBRID M POWER",
+                desc: "The high-performance luxury SAV pairing a high-revving V8 engine with an electric motor for unmatched dominant presence.",
+                engine: "V8 Hybrid System",
+                hp: "748 HP",
+                torque: "1000 Nm",
+                acc: "3.8 Seconds",
+                image: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1200&q=80",
+                auraColor: "rgba(138, 12, 19, 0.4)"
+            }
+        ];
+
+        // 2. SWITCH MODEL FUNCTION
+        function switchModel(index) {
+            const data = bmwModels[index];
+            
+            // Update Active Tab Styling
+            const tabs = document.querySelectorAll('.model-tab');
+            tabs.forEach((tab, idx) => {
+                if(idx === index) {
+                    tab.className = "model-tab active-tab px-5 py-3 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 glass-panel border border-bmw-lightblue text-white shadow-lg shadow-bmw-blue/20";
+                } else {
+                    tab.className = "model-tab px-5 py-3 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 glass-panel border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600";
+                }
+            });
+
+            // Smooth transition updates
+            const img = document.getElementById('selected-car-img');
+            img.style.opacity = '0';
+            img.style.transform = 'scale(0.95)';
+
+            setTimeout(() => {
+                document.getElementById('selected-title').innerText = data.title;
+                document.getElementById('selected-badge').innerText = data.badge;
+                document.getElementById('selected-desc').innerText = data.desc;
+                document.getElementById('spec-engine').innerText = data.engine;
+                document.getElementById('spec-hp').innerText = data.hp;
+                document.getElementById('spec-torque').innerText = data.torque;
+                document.getElementById('spec-acc').innerText = data.acc;
+                document.getElementById('model-aura').style.backgroundColor = data.auraColor;
+                img.src = data.image;
+
+                img.style.opacity = '1';
+                img.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // 3. COLOR PAINT FINISH CUSTOMIZER
+        function changePaint(colorHex, name, imgSrc) {
+            document.getElementById('paint-glow').style.backgroundColor = colorHex;
+            document.getElementById('paint-name').innerText = name;
+            
+            const carImg = document.getElementById('customizer-car-img');
+            carImg.style.opacity = '0.4';
+            
+            setTimeout(() => {
+                carImg.src = imgSrc;
+                carImg.style.opacity = '1';
+            }, 300);
+
+            // Update button borders
+            const btns = document.querySelectorAll('.paint-btn');
+            btns.forEach(btn => {
+                if(btn.style.backgroundColor === colorHex || btn.title.toLowerCase().includes(name.split(' ')[0].toLowerCase())) {
+                    btn.style.borderColor = '#ffffff';
+                } else {
+                    btn.style.borderColor = 'transparent';
+                }
+            });
+        }
+
+        // 4. HEADLIGHTS TOGGLE LOGIC
+        let headlightsOn = false;
+        function toggleHeadlights() {
+            headlightsOn = !headlightsOn;
+            const card = document.getElementById('hero-card');
+            const icon = document.getElementById('light-icon');
+            const btnText = document.getElementById('light-btn-text');
+
+            if (headlightsOn) {
+                card.classList.remove('headlights-off');
+                card.classList.add('headlights-on');
+                icon.className = "fa-solid fa-lightbulb text-amber-300 animate-pulse";
+                btnText.innerText = "Laserlights ACTIVE";
+            } else {
+                card.classList.remove('headlights-on');
+                card.classList.add('headlights-off');
+                icon.className = "fa-regular fa-lightbulb text-bmw-lightblue";
+                btnText.innerText = "Toggle Laserlights";
+            }
+        }
+
+        // 5. SYNTHESIZED ENGINE AUDIO PREVIEW (Using Web Audio API)
+        let audioCtx = null;
+        let isEnginePlaying = false;
+        let engineOsc = null;
+        let gainNode = null;
+
+        function toggleEngineSound() {
+            const soundBtn = document.getElementById('engine-sound-btn');
+            const icon = document.getElementById('sound-icon');
+            const waves = document.querySelectorAll('.sound-wave');
+
+            if(!isEnginePlaying) {
+                try {
+                    if(!audioCtx) {
+                        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    
+                    // Create Low Frequency Rumble Engine Synth
+                    engineOsc = audioCtx.createOscillator();
+                    gainNode = audioCtx.createGain();
+
+                    engineOsc.type = 'sawtooth';
+                    engineOsc.frequency.setValueAtTime(65, audioCtx.currentTime); // Low V8 frequency
+                    
+                    // Gentle rumble modulation
+                    gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+
+                    engineOsc.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+
+                    engineOsc.start();
+                    isEnginePlaying = true;
+
+                    icon.className = "fa-solid fa-volume-high text-bmw-lightblue";
+                    waves.forEach(w => w.classList.add('active'));
+
+                    // Pitch rev effect
+                    setTimeout(() => {
+                        if(engineOsc && isEnginePlaying) {
+                            engineOsc.frequency.exponentialRampToValueAtTime(160, audioCtx.currentTime + 1.2);
+                            setTimeout(() => {
+                                if(engineOsc && isEnginePlaying) {
+                                    engineOsc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 1.5);
+                                }
+                            }, 1200);
+                        }
+                    }, 200);
+
+                } catch(e) {
+                    console.log("Audio not allowed without interaction", e);
+                }
+            } else {
+                if(engineOsc) {
+                    engineOsc.stop();
+                    engineOsc.disconnect();
+                }
+                isEnginePlaying = false;
+                icon.className = "fa-solid fa-volume-xmark text-slate-400";
+                waves.forEach(w => w.classList.remove('active'));
+            }
+        }
+
+        // 6. 3D TILT EFFECT ON HERO CARD
+        const card = document.getElementById('hero-card');
+        if (card) {
+            window.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth / 2 - e.pageX) / 45;
+                const y = (window.innerHeight / 2 - e.pageY) / 45;
+                card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+        }
+
+        // 7. COUNTER UP ANIMATION FOR PERFORMANCE NUMBERS
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                let count = 0;
+                const speed = target / 50;
+
+                const updateCount = () => {
+                    count += speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count);
+                        setTimeout(updateCount, 30);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+
+            // Float counter for acceleration seconds
+            const floatCounters = document.querySelectorAll('.counter-float');
+            floatCounters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                let count = 0;
+                const updateFloat = () => {
+                    count += 0.1;
+                    if (count < target) {
+                        counter.innerText = count.toFixed(1);
+                        setTimeout(updateFloat, 60);
+                    } else {
+                        counter.innerText = target.toFixed(1);
+                    }
+                };
+                updateFloat();
+            });
+        }
+
+        // 8. SCROLL REVEAL ANIMATIONS
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // Start Counters on load
+        window.addEventListener('DOMContentLoaded', () => {
+            animateCounters();
+        });
+    </script>
+</body>
+</html>
